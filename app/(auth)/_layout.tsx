@@ -1,20 +1,20 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Stack } from "expo-router";
 import { Pressable, useColorScheme } from "react-native";
-import Colors from "../../../constants/Colors";
+import Colors from "../../constants/Colors";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "index",
+  initialRouteName: "welcome",
 };
 
 export default function ProfileLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack screenOptions={{ headerShown: false }} initialRouteName="welcome">
       <Stack.Screen
-        name="index"
+        name="welcome"
         options={{
           headerShown: false,
           headerRight: () => (
@@ -33,10 +33,8 @@ export default function ProfileLayoutNav() {
           ),
         }}
       />
-      <Stack.Screen name="user-details" options={{ headerShown: true }} />
-      <Stack.Screen name="change-password" options={{ headerShown: true }} />
-      <Stack.Screen name="favorites" options={{ headerShown: true }} />
-      <Stack.Screen name="settings" options={{ headerShown: true }} />
+      <Stack.Screen name="login" options={{ headerShown: true }} />
+      <Stack.Screen name="register" options={{ headerShown: true }} />
     </Stack>
   );
 }
