@@ -5,14 +5,16 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "com.tm470projectapp.startupcompanion",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -26,8 +28,9 @@
       "bundler": "metro",
       "favicon": "./assets/images/favicon.png"
     },
-    "experiments": {
-      
-    }
+    "experiments": {},
+    "plugins": [
+      "expo-router"
+    ]
   }
 }

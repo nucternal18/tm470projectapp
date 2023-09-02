@@ -8,7 +8,7 @@ import {
   StyleSheet,
   GestureResponderEvent,
 } from "react-native";
-import { FONTS, COLORS } from "../constants";
+import { FONTS, COLORS } from "@constants/theme";
 
 interface TextButtonProps {
   label: string;

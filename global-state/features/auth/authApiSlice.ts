@@ -1,6 +1,6 @@
 import * as SecureStore from "expo-secure-store";
-import { authApiSlice, contentApiSlice } from "@global-state/api";
-import { IFormData } from "../../../types";
+import { authApiSlice, feedApiSlice } from "@global-state/api";
+import * as z from "zod";
 import { usersSlice } from "../user/userApiSlice";
 import {
   setAuthState,
@@ -10,40 +10,71 @@ import {
 } from "./authSlice";
 import { resetUserState } from "../user/userSlice";
 
+const authSchema = z.object({
+  email: z.string().email().nonempty({ message: "Email is required" }),
+  oneTimeCode: z.string().nonempty().optional(),
+  isMobile: z.boolean().optional(),
+  organisation: z.string().nonempty().optional(),
+  postalCode: z.string().nonempty().optional(),
+  name: z.string().nonempty().optional(),
+});
+
+export const partialAuthSchema = authSchema.partial();
+
+export type AuthSchemaType = z.infer<typeof authSchema>;
+export type PartialAuthSchemaProps = z.infer<typeof partialAuthSchema>;
+
+
 export const authApi = authApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation<{ token: string; refreshToken: string }, IFormData>(
-      {
-        query: (data) => ({
-          url: "auth/login",
-          method: "POST",
-          body: { ...data },
-        }),
-        invalidatesTags: ["Auth"],
-        async onQueryStarted(_args, { dispatch, queryFulfilled }) {
-          try {
-            dispatch(setLoadingState(true));
-            const { data } = await queryFulfilled;
-            if (data) {
-              await SecureStore.setItemAsync("app_authtoken", data.token);
-              dispatch(
-                setAuthState({ token: data.token, isAuthenticated: true })
-              );
-            }
-          } catch (error: any) {
-            dispatch(setLoadingState(false));
-            if (error?.response?.status === 401) {
-              await SecureStore.deleteItemAsync("app_authtoken");
-              dispatch(setError(error));
-            }
-            console.log(error);
+    login: builder.mutation<
+      { token: string; refreshToken: string },
+      PartialAuthSchemaProps
+    >({
+      query: (data) => ({
+        url: "auth/login",
+        method: "POST",
+        body: { ...data },
+      }),
+      invalidatesTags: ["Auth"],
+    }),
+    authenticate: builder.mutation<
+      { token: string; refreshToken: string },
+      PartialAuthSchemaProps
+    >({
+      query: (data) => ({
+        url: "/auth/authenticate",
+        method: "POST",
+        body: { ...data },
+      }),
+      invalidatesTags: ["Auth"],
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        try {
+          dispatch(setLoadingState(true));
+          const { data } = await queryFulfilled;
+          if (data) {
+            await SecureStore.setItemAsync("app_authtoken", data.token);
+            await SecureStore.setItemAsync(
+              "app_refreshtoken",
+              data.refreshToken
+            );
+            dispatch(
+              setAuthState({ token: data.token, isAuthenticated: true })
+            );
           }
-        },
-      }
-    ),
+        } catch (error: any) {
+          dispatch(setLoadingState(false));
+          if (error?.response?.status === 401) {
+            await SecureStore.deleteItemAsync("app_authtoken");
+            dispatch(setError(error));
+          }
+          console.log(error);
+        }
+      },
+    }),
     register: builder.mutation<
       { accessToken: string; refreshToken: string; isNewlyRegistered: boolean },
-      IFormData
+      PartialAuthSchemaProps
     >({
       query: (data) => ({
         url: "auth/register",
@@ -67,28 +98,6 @@ export const authApi = authApiSlice.injectEndpoints({
         }
       },
     }),
-    requestPasswordReset: builder.mutation<
-      { success: boolean; message: string },
-      { email: string }
-    >({
-      query: ({ email }: { email: string }) => ({
-        url: "auth/request-reset",
-        method: "POST",
-        body: { email },
-      }),
-      invalidatesTags: ["Auth"],
-    }),
-    resetPassword: builder.mutation<
-      { success: boolean; message: string },
-      { token: string; password: string }
-    >({
-      query: ({ token, password }: { token: string; password: string }) => ({
-        url: "auth/reset",
-        method: "POST",
-        body: { token, password },
-      }),
-      invalidatesTags: ["Auth"],
-    }),
     logout: builder.mutation<void, void>({
       query: () => ({
         url: "auth/logout",
@@ -98,7 +107,7 @@ export const authApi = authApiSlice.injectEndpoints({
         dispatch(resetAuthState());
         dispatch(resetUserState());
         dispatch(authApiSlice.util.resetApiState());
-        dispatch(contentApiSlice.util.resetApiState());
+        dispatch(feedApiSlice.util.resetApiState());
         dispatch(usersSlice.util.resetApiState());
         await SecureStore.deleteItemAsync("app_authtoken");
       },
@@ -112,6 +121,4 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useLogoutMutation,
-  useRequestPasswordResetMutation,
-  useResetPasswordMutation,
 } = authApi;

@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 import {  RootState } from "@global-state/store";
-import { CurrentUser, UserState } from "types";
+import {  UserState } from "types";
+import { PartialUserSchemaWithIdProps } from "@models/User";
 
 // const getCurrentUser = async () => {
 //     const user = await SecureStore.getItemAsync("app_user");
@@ -12,7 +13,7 @@ import { CurrentUser, UserState } from "types";
 export const initialState: UserState = {
   currentUser: null,
   message: "",
-  error: { name: "", message: "" },
+  error: { name: "", message: "", success: false, isError: false },
 };
 
 export const userSlice = createSlice({
@@ -23,16 +24,16 @@ export const userSlice = createSlice({
       state,
       {
         payload: { currentUser },
-      }: PayloadAction<{ currentUser: Partial<CurrentUser> }>
+      }: PayloadAction<{ currentUser: Partial<PartialUserSchemaWithIdProps> }>
     ) => {
       state.currentUser = currentUser;
     },
     resetUserState: (state) => {
       state.currentUser = null;
       state.message = "";
-      state.error = { name: "", message: "" };
+      state.error = { name: "", message: "", success: false, isError: false };
     },
-    setError: (state, { payload }: PayloadAction<Error>) => {
+    setError: (state, { payload }: PayloadAction<Error & { success: boolean; isError: boolean} >) => {
       state.error = payload;
     },
   },

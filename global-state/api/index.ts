@@ -118,8 +118,8 @@ export const userApiSlice = createApi({
 });
 
 
-export const contentApiSlice = createApi({
-  reducerPath: "editorApi",
+export const feedApiSlice = createApi({
+  reducerPath: "feedApi",
   baseQuery: baseQueryWithReAuth,
   keepUnusedDataFor: 300,
   tagTypes: ["Content"],

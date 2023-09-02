@@ -4,60 +4,73 @@ import {
   configureStore,
   ThunkAction,
   combineReducers,
+  PreloadedState,
 } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   authApiSlice,
   messagesApiSlice,
-  contentApiSlice,
+  feedApiSlice,
   uploadApiSlice,
   userApiSlice,
 } from "./api";
 import authReducer from "@features/auth/authSlice";
 import userReducer from "@features/user/userSlice";
-import contentReducer from "@features/content/contentSlice";
+import feedReducer from "@global-state/features/feed/feedSlice";
+import messagesReducer from "@global-state/features/messages/messagesSlice";
+import uploadReducer from "@global-state/features/upload/uploadSlice";
 
-
-// const persistConfig = {
-//   key: "root",
-//   storage: AsyncStorage,
-//   whitelist: ["userApi"],
-//   blacklist: ["authApi"],
-// };
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage: AsyncStorage,
+  whitelist: ["userApi"],
+  blacklist: ["authApi"],
+};
 
 const reducers = {
   [authApiSlice.reducerPath]: authApiSlice.reducer,
   [userApiSlice.reducerPath]: userApiSlice.reducer,
   [messagesApiSlice.reducerPath]: messagesApiSlice.reducer,
-  [contentApiSlice.reducerPath]: contentApiSlice.reducer,
+  [feedApiSlice.reducerPath]: feedApiSlice.reducer,
   [uploadApiSlice.reducerPath]: uploadApiSlice.reducer,
   auth: authReducer,
   user: userReducer,
-  content: contentReducer,
+  feed: feedReducer,
+  messages: messagesReducer,
+  upload: uploadReducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);
 
-export const store = configureStore({
-  reducer: combinedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }).concat([
-      authApiSlice.middleware,
-      messagesApiSlice.middleware,
-      contentApiSlice.middleware,
-      uploadApiSlice.middleware,
-      userApiSlice.middleware,
-    ]),
-  devTools: process.env.NODE_ENV !== "production",
-});
+// persist the root reducer
+const persistedReducer = persistReducer(persistConfig, combinedReducer);
 
-setupListeners(store.dispatch);
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+  return configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }).concat([
+        authApiSlice.middleware,
+        messagesApiSlice.middleware,
+        feedApiSlice.middleware,
+        uploadApiSlice.middleware,
+        userApiSlice.middleware,
+      ]),
+    devTools: process.env.NODE_ENV !== "production",
+    preloadedState,
+  });
+};
 
-const makeStore = () => store;
+setupListeners(setupStore().dispatch);
+
+const makeStore = () => setupStore();
 export type AppStore = ReturnType<typeof makeStore>;
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = AppStore["dispatch"];
 export type RootState = ReturnType<typeof combinedReducer>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

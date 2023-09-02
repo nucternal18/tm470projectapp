@@ -1,10 +1,11 @@
 import { userApiSlice } from "@global-state/api";
-import { CurrentUser, FavoritesProps, UpdatedUser } from "../../../types";
+import { FavoritesProps } from "../../../types";
 import { setError, setUserState } from "./userSlice";
+import { PartialUserSchemaWithIdProps } from "Models/User";
 
 export const usersSlice = userApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUser: builder.query<CurrentUser, void>({
+    getUser: builder.query<PartialUserSchemaWithIdProps, void>({
       query: () => ({
         url: "users/getMe",
       }),
@@ -20,7 +21,7 @@ export const usersSlice = userApiSlice.injectEndpoints({
         }
       },
     }),
-    getUserById: builder.query<CurrentUser, string>({
+    getUserById: builder.query<PartialUserSchemaWithIdProps, string>({
       query: (id) => ({
         url: `users/${id}`,
       }),
@@ -28,7 +29,7 @@ export const usersSlice = userApiSlice.injectEndpoints({
     }),
     updateUser: builder.mutation<
       { success: boolean; message: string },
-      UpdatedUser
+      PartialUserSchemaWithIdProps
     >({
       query: (user) => ({
         url: `users/${user.id}`,
@@ -39,7 +40,7 @@ export const usersSlice = userApiSlice.injectEndpoints({
     }),
     resetCredentials: builder.mutation<
       { success: boolean; message: string },
-      UpdatedUser
+      PartialUserSchemaWithIdProps
     >({
       query: (user) => ({
         url: `users/resetCredentials/${user.id}`,
@@ -85,6 +86,8 @@ export const usersSlice = userApiSlice.injectEndpoints({
             setError({
               name: "FETCH_ERROR",
               message: "Error adding to favorites",
+              success: false,
+              isError: true,
             })
           );
         }

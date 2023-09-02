@@ -3,7 +3,7 @@ module.exports = function (api) {
   return {
     presets: ["babel-preset-expo"],
     plugins: [
-      require.resolve("expo-router/babel"),
+      "expo-router/babel",
       "react-native-reanimated/plugin",
       [
         "module-resolver",
@@ -22,6 +22,7 @@ module.exports = function (api) {
             "@api": "./global-state/api",
             "@helpers": "./helpers",
             "@features": "./global-state/features",
+            "@models": "./Models",
           },
         },
       ],

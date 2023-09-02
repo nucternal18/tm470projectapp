@@ -1,3 +1,4 @@
+import { FeedSectionWithSubSectionSchema, FeedWithDistrictsSchemaProps } from './Models/Feed';
 import {
   Animated,
   ColorValue,
@@ -7,139 +8,10 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native";
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import {
-  CompositeScreenProps,
-  DefaultNavigatorOptions,
-  NavigatorScreenParams,
-  ParamListBase,
-  RouteConfig,
-  StackNavigationState,
-} from "@react-navigation/native";
-import {
-  StackNavigationEventMap,
-  StackNavigationOptions,
-  StackScreenProps,
-} from "@react-navigation/stack";
+
 import { Control, UseFormReset } from "react-hook-form";
+import { PartialUserSchemaWithIdProps } from '@models/User';
 
-// generic stack routes type
-export type StackRoutesType<ParamList extends ParamListBase> = Array<
-  RouteConfig<
-    ParamList,
-    keyof ParamList,
-    StackNavigationState<ParamList>,
-    StackNavigationOptions,
-    StackNavigationEventMap
-  >
->;
-
-// generic typing for stack navigator options
-type StackNavigatorOptions<ParamList extends ParamListBase> =
-  DefaultNavigatorOptions<
-    ParamList,
-    StackNavigationState<ParamList>,
-    StackNavigationOptions,
-    StackNavigationEventMap
-  >;
-
-export type SubNavigator<T extends ParamListBase> = {
-  [K in keyof T]: { screen: K; params?: T[K] };
-}[keyof T];
-
-export type StackProps<
-  T extends ParamListBase,
-  S extends keyof T
-> = StackScreenProps<T, S>;
-
-export type BottomTabProps<
-  T extends ParamListBase,
-  S extends keyof T
-> = BottomTabScreenProps<T, S>;
-
-export type RootStackParamList = {
-  Auth: NavigatorScreenParams<AccountStackParamList>;
-  Main: NavigatorScreenParams<MainStackParamList>;
-  Help: undefined;
-  WalkThrough: undefined;
-};
-
-export type AccountStackParamList = {
-  Welcome: undefined;
-  AuthMain: undefined;
-  SignUp: undefined;
-  SignIn: undefined;
-  ForgotPassword: undefined;
-  NewPassword: undefined;
-  ConfirmEmail: undefined;
-  Main: NavigatorScreenParams<MainStackParamList>;
-};
-
-export type MainStackParamList = {
-  CountyDistrict: NavigatorScreenParams<CountyDistrictStackParamList>;
-  UserProfile: NavigatorScreenParams<ProfileStackParamList>;
-  Notifications: undefined;
-  UserMessages: NavigatorScreenParams<MessagesStackParamList>;
-};
-
-export type CountyDistrictStackParamList = {
-  County: {
-    id: string;
-    name: string;
-  };
-  District: {
-    id: string;
-    name: string;
-  };
-  Section: {
-    id: string;
-    name: string;
-  };
-  SubSection: { id: string; name: string };
-  Search: undefined;
-  Help: undefined;
-  Modal: { id: string; name: string };
-};
-
-export type CountyDistrictScreenProps<
-  T extends keyof CountyDistrictStackParamList
-> = StackScreenProps<CountyDistrictStackParamList, T>;
-
-export type CountyDistrictStackScreenProps =
-  StackScreenProps<CountyDistrictStackParamList>;
-
-export type ProfileStackParamList = {
-  Settings: undefined;
-  Favorites: undefined;
-  Profile: undefined;
-  Camera: undefined;
-  Help: undefined;
-  Details: undefined;
-  ChangePassword: undefined;
-  Preferences: undefined;
-  MyAlerts: undefined;
-  MySubscriptions: undefined;
-  Modal: CountyDistrictStackParamList["Modal"];
-};
-
-export type ProfileStackScreenProps<T extends keyof ProfileStackParamList> =
-  CompositeScreenProps<
-    StackScreenProps<ProfileStackParamList, T>,
-    CountyDistrictScreenProps<keyof CountyDistrictStackParamList>
-  >;
-
-export type MainStackScreenProps = CompositeScreenProps<
-  BottomTabScreenProps<MainStackParamList, "CountyDistrict">,
-  CompositeScreenProps<
-    StackScreenProps<CountyDistrictStackParamList>,
-    StackScreenProps<MessagesStackParamList>
-  >
->;
-
-export type MessagesStackParamList = {
-  Messages: undefined;
-  ReadMessage: { id: string } | undefined;
-};
 
 export enum ROLE {
   PARTNER = "PARTNER",
@@ -148,50 +20,7 @@ export enum ROLE {
   USER = "USER",
 }
 
-export type CurrentUser = {
-  id?: string;
-  name?: string;
-  email?: string;
-  isAdmin?: boolean;
-  isSuperAdmin?: boolean;
-  passwordInput?: string;
-  role?: ROLE;
-  contactNumber?: string;
-  imageUrl?: string;
-  imageFile?: string | ArrayBuffer | null;
-  county?: string;
-  postCode?: string;
-  organisation?: {
-    id?: string;
-    name?: string;
-    userId?: string;
-    createdAt?: string;
-  };
-  district?: string;
-  emailVerified?: boolean;
-  acceptTermsAndConditions?: boolean;
-  isNewlyRegistered?: boolean;
-};
-export type UpdatedUser = {
-  id?: string;
-  name?: string;
-  email?: string;
-  isAdmin?: boolean;
-  isSuperAdmin?: boolean;
-  password?: string;
-  newPassword?: string;
-  role?: ROLE;
-  contactNumber?: string;
-  imageUrl?: string;
-  imageFile?: string | ArrayBuffer | null;
-  county?: string;
-  postCode?: string;
-  organisation?: string;
-  district?: string;
-  emailVerified?: boolean;
-  acceptTermsAndConditions?: boolean;
-  isNewlyRegistered?: boolean;
-};
+
 
 export interface AuthState {
   message: string;
@@ -203,14 +32,13 @@ export interface AuthState {
 }
 
 export type UserState = {
-  currentUser: CurrentUser | null;
+  currentUser: PartialUserSchemaWithIdProps | null;
   message: string;
-  error: Error | undefined;
+  error: Error & { success: boolean; isError: boolean } | undefined;
 };
 
 export enum SCREENS {
-  COUNTY = "County",
-  DISTRICT = "District",
+  FEED = "Feed",
   SECTION = "Section",
   SUBSECTION = "SubSection",
   SEARCH = "Search",
@@ -228,131 +56,7 @@ export type SearchDataProps = {
   sections?: "CountySectionSubSection" | "DistrictSection";
 };
 
-export type DistrictDataProps = {
-  id: string;
-  name: string;
-  imageUrl: string;
-  logoIcon: string;
-  createdAt: string;
-  updatedAt: string;
-  districtSections: SectionProps[];
-};
 
-export type CountyDataProps = {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  name: string;
-  imageUrl: string;
-  logoIcon: string;
-  published: boolean;
-  viewCount: number;
-  lep: LEP;
-  welcome: Welcome;
-  news: News;
-  districts: DistrictDataProps[];
-  comments: Comment[];
-  sections: SectionProps[];
-};
-
-export type countyDistrictLocationsProps = {
-  title: string;
-  latitude: number;
-  longitude: number;
-};
-
-export interface IFormData {
-  name?: string;
-  email?: string;
-  password?: string;
-  newPassword?: string;
-  confirmPassword?: string;
-  role?: string;
-  isAdmin?: boolean;
-  emailVerified?: boolean;
-  acceptTermsAndConditions?: boolean;
-  county?: string;
-  district?: string;
-  contactNumber?: string;
-  postCode?: string;
-  imageUrl?: string;
-  acceptContactRequest?: boolean;
-  organisation?: string;
-  rememberMe?: boolean;
-}
-
-export type Welcome = {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-};
-
-export type LEP = {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-};
-
-export type News = {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-};
-
-export type SectionProps = {
-  id: string;
-  name: string;
-  title?: string;
-  content?: string;
-  imageUrl?: string;
-  isSubSection?: boolean;
-  isLive?: boolean;
-  countyId?: string;
-  districtId?: string;
-  subsections?: SubSectionProps[];
-};
-export type SubSectionProps = {
-  id: string;
-  name: string;
-  title?: string;
-  content?: string;
-  imageUrl?: string;
-  isSubSubSection?: boolean;
-  isLive?: boolean;
-  sectionId?: string;
-  subSection?: SubSubSectionProps[];
-};
-
-export type SubSubSectionProps = {
-  id: string;
-  name: string;
-  title?: string;
-  content?: string;
-  imageUrl?: string;
-  isLive?: boolean;
-};
-
-export type EconomicDataWidgetProps = {
-  id: string;
-  title: string;
-  stats: string;
-  descriptionLine1: string;
-  descriptionLine2: string;
-  linkName: string;
-  linkUrl: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type EconomicData = {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  economicDataWidgets: EconomicDataWidgetProps[];
-};
 
 export type Comment = {
   id: string;
@@ -363,27 +67,9 @@ export type Comment = {
   authorId?: string;
 };
 
-export type ContentTypes = "Welcome" | "LEP" | "News";
-
-export interface ContentState {
-  welcome: Welcome | null;
-  news: News | null;
-  lep: LEP | null;
-  county: CountyDataProps | null;
-  district: DistrictDataProps | null;
-  type: ContentTypes | null;
-  message: string;
+export interface FeedState {
+  feed: FeedWithDistrictsSchemaProps | null;
   isLoading: boolean;
-  content: {
-    id: string;
-    title: string;
-    content: string;
-    type?: string;
-    screen?: string;
-    countyId?: string;
-    isFavorite?: boolean;
-    favContentId?: string;
-  } | null;
   error: ({ success: boolean; isError: boolean } & Error) | undefined;
 }
 
@@ -395,48 +81,6 @@ export type FavoritesProps = {
   countyId?: string;
   createdAt: string;
   updatedAt: string;
-};
-
-export type feed = {
-  counties: CountyDataProps[];
-  sections: SectionProps[];
-  districtSections: SectionProps[];
-  subSections: SubSectionProps[];
-};
-
-export type UserDetail = {
-  name?: string;
-  email?: string;
-  postcode?: string;
-  organisation?: string;
-  currentPassword?: string;
-  newPassword?: string;
-  confirmPassword?: string;
-};
-
-export interface IUserDetailProps {
-  control: Control<UserDetail, any>;
-  reset?: UseFormReset<UserDetail>;
-  prependIcon?: React.ReactNode;
-  secureTextEntry?: boolean;
-  keyboardType?: "default" | "numeric" | "email-address" | "phone-pad";
-  value?: string;
-  dname: any;
-  rules?: any;
-  placeholder?: string;
-  label?: string;
-}
-
-export type MessageProps = {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  from: string;
-  to: string;
-  subject: string;
-  message: string;
-  isRead: boolean;
-  isArchived: boolean;
 };
 
 export interface ThemeWeights {

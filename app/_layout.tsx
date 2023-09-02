@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   DarkTheme,
@@ -24,6 +25,9 @@ export const unstable_settings = {
   initialRouteName: "(auth)/welcome",
 };
 
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
@@ -35,10 +39,24 @@ export default function RootLayout() {
     if (error) throw error;
   }, [error]);
 
+    const onLayoutRootView = useCallback(async () => {
+      if (loaded) {
+        // This tells the splash screen to hide immediately! If we call this after
+        // `setAppIsReady`, then we may see a blank screen while the app is
+        // loading its initial state and rendering its first pixels. So instead,
+        // we hide the splash screen once we know the root view has already
+        // performed layout.
+        await SplashScreen.hideAsync();
+      }
+    }, [loaded]);
+
+
+  useEffect(() => {
+    onLayoutRootView();
+  }, [loaded]);
+
   return (
     <>
-      {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
-      {!loaded && <SplashScreen />}
       {loaded && <RootLayoutNav />}
     </>
   );

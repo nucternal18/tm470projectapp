@@ -8,7 +8,7 @@ export const unstable_settings = {
   initialRouteName: "welcome",
 };
 
-export default function ProfileLayoutNav() {
+export default function AuthLayout() {
   const colorScheme = useColorScheme();
 
   return (
