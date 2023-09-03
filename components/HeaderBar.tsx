@@ -1,9 +1,9 @@
 import React from "react";
 import {StyleSheet, Text, View, StyleProp, ViewStyle} from "react-native";
 
-import useTheme from "src/features/theme/useTheme";
-import globalStyles from "src/constants/styles";
-import {COLORS, SIZES, FONTS} from "../constants";
+import useTheme from "@features/theme/useTheme";
+import globalStyles from "@constants/styles";
+import {COLORS, SIZES, FONTS} from "@constants/theme";
 
 type HeaderBarProps = {
   title: string;

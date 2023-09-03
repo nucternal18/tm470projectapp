@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable, ViewStyle } from "react-native";
+import { View, Text, StyleSheet, Pressable, ViewStyle, Platform } from "react-native";
 import { COLORS, CONTAINER_PRIMARY, FONTS, SIZES } from "../constants/theme";
 
 interface ICustomButtonProps {
@@ -50,11 +50,18 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderRadius: SIZES.radius,
-    shadowColor: COLORS.primaryDark200,
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.primaryDark200,
+        shadowOffset: { width: -2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        backgroundColor: COLORS.primaryDark100,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
   },
   text: {
     ...FONTS.h3,

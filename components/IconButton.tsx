@@ -7,7 +7,7 @@ import {
   ImageStyle,
   GestureResponderEvent,
 } from "react-native";
-import { COLORS } from "src/constants/theme";
+import { COLORS } from "@constants/theme";
 
 interface IconButtonProps {
   onPress: (event: GestureResponderEvent) => void;

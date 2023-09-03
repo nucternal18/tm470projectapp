@@ -18,9 +18,9 @@ import Animated, {
 } from "react-native-reanimated";
 import {FontAwesome5} from "@expo/vector-icons";
 
-import {COLORS, FONTS, SIZES} from "src/constants/theme";
-import globalStyles from "src/constants/styles";
-import useTheme from "src/features/theme/useTheme";
+import {COLORS, FONTS, SIZES} from "@constants/theme";
+import globalStyles from "@constants/styles";
+import useTheme from "@features/theme/useTheme";
 import {FavoritesProps} from "types";
 import IconButton from "./IconButton";
 

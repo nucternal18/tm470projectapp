@@ -17,29 +17,25 @@ export const COLORS = {
   error08: "rgba(246, 86, 93, 0.08)",
 
   // Primary
-  primary: "rgb(94, 23, 235)",
-  primary80: "rgba(94, 23, 235, 0.8)",
-  primary60: "rgba(94, 23, 235, 0.6)",
-  primary20: "rgba(94, 23, 235, 0.2)",
-  primary08: "rgba(94, 23, 235, 0.08)",
-  primaryDark100: "#5515d4",
-  primaryDark200: "#4b12bc",
-  primaryDark300: "#4210a5",
-  primaryDark400: "#380e8d",
-  primaryDark500: "#2e0c76",
-  primaryDark600: "#26095e",
-  primaryDark700: "#1c0746",
-  primaryDark800: "#13052f",
-  primaryDark900: "#090217",
-  primaryLight50: "#f9f8fc",
-  primaryLight100: "#efe8fd",
-  primaryLight200: "#dfd1fb",
-  primaryLight300: "#cfb9f9",
-  primaryLight400: "#bfa2f7",
-  primaryLight500: "#af8bf5",
-  primaryLight600: "#9e74f3",
-  primaryLight700: "#8e5df1",
-  primaryLight800: "#6e2eed",
+  primary: "#878484",
+  primaryDark100: "#7a7777",
+  primaryDark200: "#6c6a6a",
+  primaryDark300: "#5f5c5c",
+  primaryDark400: "#514f4f",
+  primaryDark500: "#444242",
+  primaryDark600: "#363535",
+  primaryDark700: "#282828",
+  primaryDark800: "#1b1a1a",
+  primaryDark900: "#0d0d0d",
+  primaryLight50: "#f3f3f3",
+  primaryLight100: "#e7e6e6",
+  primaryLight200: "#dbdada",
+  primaryLight300: "#cfcece",
+  primaryLight400: "#c3c2c2",
+  primaryLight500: "#b7b5b5",
+  primaryLight600: "#aba9a9",
+  primaryLight700: "#9f9d9d",
+  primaryLight800: "#939090",
 
   // Secondary
   secondary: "rgb(0, 220, 179)",
@@ -125,7 +121,6 @@ export const COLORS = {
 
   /** UI color for #tertiary */
   tertiary: "#E8AE4C",
-
 
   // gray variations
   /** UI color for #gray */
@@ -273,17 +268,42 @@ export const SIZES: ThemeSizes = {
 };
 
 export const FONTS = {
-    largeTitle: { fontFamily: "Poppins-Black", fontSize: SIZES.largeTitle },
-    h1: { fontFamily: "Poppins-Bold", fontSize: SIZES.h1, lineHeight: 36 },
-    h2: { fontFamily: "Poppins-Bold", fontSize: SIZES.h2, lineHeight: 30 },
-    h3: { fontFamily: "Poppins-SemiBold", fontSize: SIZES.h3, lineHeight: 22 },
-    h4: { fontFamily: "Poppins-SemiBold", fontSize: SIZES.h4, lineHeight: 22 },
-    h5: { fontFamily: "Poppins-SemiBold", fontSize: SIZES.h5, lineHeight: 22 },
-    body1: { fontFamily: "Poppins-Regular", fontSize: SIZES.body1, lineHeight: 36 },
-    body2: { fontFamily: "Poppins-Regular", fontSize: SIZES.body2, lineHeight: 30 },
-    body3: { fontFamily: "Poppins-Regular", fontSize: SIZES.body3, lineHeight: 22 },
-    body4: { fontFamily: "Poppins-Regular", fontSize: SIZES.body4, lineHeight: 22 },
-    body5: { fontFamily: "Poppins-Regular", fontSize: SIZES.body5, lineHeight: 22 },
+  largeTitle: { fontFamily: "Poppins-Black", fontSize: SIZES.largeTitle },
+  h1: { fontFamily: "Poppins-Bold", fontSize: SIZES.h1, lineHeight: 36 },
+  h2: { fontFamily: "Poppins-Bold", fontSize: SIZES.h2, lineHeight: 28 },
+  h3: { fontFamily: "Poppins-SemiBold", fontSize: SIZES.h3, lineHeight: 22 },
+  h4: { fontFamily: "Poppins-SemiBold", fontSize: SIZES.h4, lineHeight: 22 },
+  h5: { fontFamily: "Poppins-SemiBold", fontSize: SIZES.h5, lineHeight: 22 },
+  body1: {
+    fontFamily: "Poppins-Regular",
+    fontSize: SIZES.body1,
+    lineHeight: 36,
+  },
+  body2: {
+    fontFamily: "Poppins-Regular",
+    fontSize: SIZES.body2,
+    lineHeight: 30,
+  },
+  body3: {
+    fontFamily: "Poppins-Regular",
+    fontSize: SIZES.body3,
+    lineHeight: 22,
+  },
+  body4: {
+    fontFamily: "Poppins-Regular",
+    fontSize: SIZES.body4,
+    lineHeight: 22,
+  },
+  body5: {
+    fontFamily: "Poppins-Regular",
+    fontSize: SIZES.body5,
+    lineHeight: 22,
+  },
+  bold: "Poppins-bold",
+  semiBold: "Poppins-SemiBold",
+  medium: "Poppins-Medium",
+  regular: "Poppins-Regular",
+  light: "Poppins-Light",
 };
 
 export const WEIGHTS: ThemeWeights = {
@@ -358,7 +378,7 @@ export const CONTAINER_TERTIARY = {};
 
 
 export const TEXT_SECONDARY =  {
-    color: COLORS.primary80,
+    color: COLORS.primary,
   };
 
 export const TEXT_TERTIARY = {

@@ -1,11 +1,11 @@
 import {StyleSheet, View, ActivityIndicator} from "react-native";
 import React from "react";
 
-import useTheme from "src/features/theme/useTheme";
+import useTheme from "@features/theme/useTheme";
 
 // constants
-import globalStyles from "src/constants/styles";
-import {COLORS, SIZES} from "../constants/theme";
+import globalStyles from "@constants/styles";
+import {COLORS, SIZES} from "@constants/theme";
 
 const LoadingOverlay = () => {
   const {colors} = useTheme();

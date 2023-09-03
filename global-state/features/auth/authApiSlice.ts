@@ -28,7 +28,7 @@ export type PartialAuthSchemaProps = z.infer<typeof partialAuthSchema>;
 export const authApi = authApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<
-      { token: string; refreshToken: string },
+      { status: string; message: string; },
       PartialAuthSchemaProps
     >({
       query: (data) => ({
@@ -39,7 +39,7 @@ export const authApi = authApiSlice.injectEndpoints({
       invalidatesTags: ["Auth"],
     }),
     authenticate: builder.mutation<
-      { token: string; refreshToken: string },
+      { status: string, token: string; refreshToken: string },
       PartialAuthSchemaProps
     >({
       query: (data) => ({
@@ -119,6 +119,7 @@ export const authApi = authApiSlice.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useAuthenticateMutation,
   useRegisterMutation,
   useLogoutMutation,
 } = authApi;

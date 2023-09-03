@@ -7,13 +7,13 @@ import {
 } from "react-hook-form";
 import {Ionicons} from "@expo/vector-icons";
 import {Entypo} from "@expo/vector-icons";
+import { useRouter } from 'expo-router'
 
 // constants
 import {COLORS, FONTS, SIZES} from "@constants/theme";
 import globalStyles from "@constants/styles";
 
-// types
-import {CountyDistrictStackParamList, IFormData, StackProps} from "types";
+
 
 // components
 import IconButton from "./IconButton";
@@ -30,15 +30,14 @@ interface ISearchScreenHeaderProps {
   control: Control<SearchProps, any>;
   handleSubmit?: UseFormHandleSubmit<SearchProps>;
   reset: UseFormReset<SearchProps>;
-  navigation: StackProps<CountyDistrictStackParamList, "Search">["navigation"];
 }
 
 const SearchScreenHeader = ({
-  navigation,
   control,
   handleSubmit,
   reset,
 }: ISearchScreenHeaderProps) => {
+  const router = useRouter()
   const {colors} = useTheme();
   const styles = globalStyles({colors});
   const [pressed, setPressed] = React.useState<boolean>(false);
@@ -54,7 +53,7 @@ const SearchScreenHeader = ({
       >
         <View style={styles.searchIconContainer}>
           <IconButton
-            onPress={() => navigation.goBack()}
+            onPress={() => router.back()}
             containerStyle={{
               marginRight: SIZES.base,
             }}
@@ -71,7 +70,7 @@ const SearchScreenHeader = ({
 
         <View style={styles.searchIconContainer}>
           <IconButton
-            onPress={() => navigation.navigate("Help")}
+            onPress={() => router.push("/help")}
             containerStyle={{}}
             iconComponent={
               <Ionicons

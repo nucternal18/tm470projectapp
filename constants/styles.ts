@@ -1,4 +1,4 @@
-import {StyleSheet} from "react-native";
+import {Platform, StyleSheet} from "react-native";
 import {ThemeColors} from "types";
 import {COLORS, FONTS, SIZES} from "./theme";
 
@@ -49,15 +49,6 @@ export default ({
     },
     container: {
       flex: 1,
-      backgroundColor: colors.background,
-    },
-    countySectionButtons: {
-      width: "100%",
-      padding: SIZES.base,
-      flexDirection: "row",
-      justifyContent: "space-around",
-      alignItems: "center",
-      backgroundColor: colors.background,
     },
     customInputContainer: {
       flexDirection: "row",
@@ -265,11 +256,6 @@ export default ({
       backgroundColor: colors.background,
       paddingHorizontal: SIZES.radius,
       paddingTop: SIZES.padding * 2,
-      shadowColor: COLORS.primaryDark200,
-      shadowOffset: {width: -2, height: 2},
-      shadowOpacity: 0.2,
-      shadowRadius: 3,
-      elevation: 5,
     },
     screenTitleContainer: {
       flexDirection: "row",

@@ -304,6 +304,7 @@ export interface ThemeLineHeights {
 
 export interface ThemeColors {
   text: ColorValue;
+  title: ColorValue;
   black: ColorValue;
   gray: ColorValue;
   danger: ColorValue;

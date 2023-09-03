@@ -9,7 +9,7 @@ import {
 import * as Haptics from "expo-haptics";
 
 
-import { COLORS, SIZES, SPACING } from "src/constants/theme";
+import { COLORS, SIZES, SPACING } from "@constants/theme";
 import { ISwitchProps } from "types";
 
 

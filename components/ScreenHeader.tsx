@@ -2,11 +2,11 @@ import React from "react";
 import {StyleSheet, Text, View, StatusBar, ViewStyle} from "react-native";
 
 // constants
-import {COLORS, FONTS, SIZES} from "src/constants/theme";
-import globalStyles from "src/constants/styles";
+import {COLORS, FONTS, SIZES} from "@constants/theme";
+import globalStyles from "@constants/styles";
 
 // redux
-import useTheme from "src/features/theme/useTheme";
+import useTheme from "@features/theme/useTheme";
 
 
 type Props = {
@@ -45,37 +45,3 @@ function ScreenHeader({
 }
 
 export default ScreenHeader;
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    width: "100%",
-    height: SIZES.height * 0.12,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: COLORS.white,
-    paddingHorizontal: SIZES.radius,
-    paddingTop: SIZES.padding * 2,
-    shadowColor: COLORS.primaryDark200,
-    shadowOffset: {width: -2, height: 2},
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5,
-  },
-  titleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  title: {
-    ...FONTS.h1,
-    color: COLORS.primaryDark100,
-  },
-  subtitle: {},
-  iconContainer: {
-    marginBottom: SIZES.radius / 2,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-});

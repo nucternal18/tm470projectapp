@@ -10,7 +10,7 @@ import {
   TextStyle,
 } from "react-native";
 import { Control, Controller, FieldValues } from "react-hook-form";
-import { COLORS, FONTS, SIZES } from "../constants";
+import { COLORS, FONTS, SIZES } from "@constants/theme";
 import globalStyles from "@constants/styles";
 import useTheme from "@features/theme/useTheme";
 

@@ -2,8 +2,8 @@ import {Text, TouchableOpacity, StyleProp, View} from "react-native";
 import React from "react";
 
 import {AntDesign} from "@expo/vector-icons";
-import globalStyles from "src/constants/styles";
-import useTheme from "src/features/theme/useTheme";
+import globalStyles from "@constants/styles";
+import useTheme from "@features/theme/useTheme";
 
 interface ButtonProps {
   title: string;

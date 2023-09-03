@@ -69,8 +69,8 @@ export type CountySchemaProps = z.infer<typeof CountySchema>;
 export const FeedSchema = z.object({
   counties: CountySchema.array(),
   sections: SectionWithSubSectionSchema.array(),
-  subSection: SectionSchema.optional(),
-  districtSections: SectionSchema.array().optional(),
+  subSections: SectionSchema.array(),
+  districtSections: SectionSchema.array(),
 });
 
 export type FeedSchemaProps = z.infer<typeof FeedSchema>;

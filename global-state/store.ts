@@ -21,6 +21,7 @@ import userReducer from "@features/user/userSlice";
 import feedReducer from "@global-state/features/feed/feedSlice";
 import messagesReducer from "@global-state/features/messages/messagesSlice";
 import uploadReducer from "@global-state/features/upload/uploadSlice";
+import themeReducer from "@global-state/features/theme/themeSlice";
 
 const persistConfig = {
   key: "root",
@@ -41,6 +42,7 @@ const reducers = {
   feed: feedReducer,
   messages: messagesReducer,
   upload: uploadReducer,
+  theme: themeReducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);
@@ -68,8 +70,8 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
 
 setupListeners(setupStore().dispatch);
 
-const makeStore = () => setupStore();
-export type AppStore = ReturnType<typeof makeStore>;
+export const store = () => setupStore();
+export type AppStore = ReturnType<typeof store>;
 export type AppDispatch = AppStore["dispatch"];
 export type RootState = ReturnType<typeof combinedReducer>;
 export type AppThunk<ReturnType = void> = ThunkAction<
