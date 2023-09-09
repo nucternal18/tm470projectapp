@@ -1,14 +1,20 @@
-import { Animated, ActivityIndicator, Pressable, useColorScheme } from 'react-native';
-import { Link, useRouter } from 'expo-router';
+import {
+  Animated,
+  ActivityIndicator,
+  Pressable,
+  useColorScheme,
+} from "react-native";
+import { Link, useRouter } from "expo-router";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
 // hooks (Controller)
-import useGetFeedController from '@hooks/useFeedController';
-import { FeedItem } from '@components/FeedItem';
+import useGetFeedController from "@hooks/useFeedController";
+import { FeedItem } from "@components/FeedItem";
 
 // constants
-import {  SIZES } from '@constants/theme';
+import { SIZES } from "@constants/theme";
 import globalStyles from "@constants/styles";
-import Colors from '@constants/Colors';
+import Colors from "@constants/Colors";
 
 // zod schemas
 import { SectionSchemaProps } from "@models/Feed";
@@ -17,21 +23,25 @@ import { SectionSchemaProps } from "@models/Feed";
 import useTheme from "@global-state/features/theme/useTheme";
 
 // components
-import { Text, View } from '@components/Themed';
+import { Text, View } from "@components/Themed";
 import ScreenHeader from "@components/ScreenHeader";
-import { FontAwesome } from '@expo/vector-icons';
 
 export default function Home() {
   const router = useRouter();
   const colorScheme = useColorScheme();
   const { feedItems, isLoading } = useGetFeedController();
 
-   const { colors } = useTheme();
-   const styles = globalStyles({ colors });
+  const { colors } = useTheme();
+  const styles = globalStyles({ colors });
 
   if (isLoading) {
     return (
-      <View style={[styles.container, { alignItems: 'center', justifyContent: 'center'}]}>
+      <View
+        style={[
+          styles.container,
+          { alignItems: "center", justifyContent: "center" },
+        ]}
+      >
         <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
@@ -41,8 +51,22 @@ export default function Home() {
     <View style={styles.container}>
       <ScreenHeader
         title="Feed"
+        leftComponent={
+          <Link href="/feed/search" asChild>
+            <Pressable>
+              {({ pressed }) => (
+                <Ionicons
+                  name="search-sharp"
+                  size={28}
+                  color={Colors[colorScheme ?? "light"].text}
+                  style={{ marginLeft: 5, opacity: pressed ? 0.5 : 1 }}
+                />
+              )}
+            </Pressable>
+          </Link>
+        }
         rightComponent={
-          <Link href="/modal" asChild>
+          <Link href="/help" asChild>
             <Pressable>
               {({ pressed }) => (
                 <FontAwesome
@@ -71,7 +95,16 @@ export default function Home() {
         )}
         renderItem={({ item }) => {
           return (
-            <FeedItem item={item} onPress={() => router.push({ pathname: '/feed/feed-details', params: { id: item.id } })} testID={item.title} />
+            <FeedItem
+              item={item}
+              onPress={() =>
+                router.push({
+                  pathname: "/feed/feed-details",
+                  params: { id: item.id },
+                })
+              }
+              testID={item.title}
+            />
           );
         }}
         numColumns={1}
@@ -79,4 +112,3 @@ export default function Home() {
     </View>
   );
 }
-

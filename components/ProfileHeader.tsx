@@ -1,46 +1,53 @@
-import React, { useCallback } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Image, Text, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+// components
 import IconButton from "./IconButton";
-import { useLogoutMutation } from "@features/auth/authApiSlice";
-import { useAppDispatch } from "@global-state/hooks";
-import { setError } from "@features/auth/authSlice";
+
+// constants
 import globalStyles from "@constants/styles";
+
+// theme
 import useTheme from "@features/theme/useTheme";
+
+// zod schemas
 import { PartialUserSchemaWithIdProps } from "@models/User";
 
-const ProfileHeader = ({ user }: { user: PartialUserSchemaWithIdProps }) => {
-  const dispatch = useAppDispatch();
-  const [logout] = useLogoutMutation();
+const ProfileHeader = ({
+  user,
+  handleLogout,
+}: {
+  user: PartialUserSchemaWithIdProps;
+  handleLogout: () => void;
+}) => {
   const { colors } = useTheme();
   const styles = globalStyles({ colors });
 
-  const handleLogout = useCallback(async () => {
-    try {
-      await logout().unwrap();
-    } catch (error: any) {
-      dispatch(setError(error.message));
-    }
-  }, []);
-
   return (
     <View style={styles.profileHeaderContainer}>
-      <View style={{flexDirection: "row", alignItems: "flex-start"}}>
-        <View style={styles.profileHeaderImgContainer}>
+      <View
+        style={{ flexDirection: "row", alignItems: "center", flex: 1, gap: 10 }}
+      >
+        <View style={[styles.profileHeaderImgContainer]}>
           {user?.imageUrl && (
             <Image
-              source={{uri: user.imageUrl}}
+              source={{ uri: user.imageUrl }}
               style={styles.profileHeaderImg}
             />
           )}
         </View>
-        <View style={styles.profileHeader}>
+        <View style={[styles.profileHeader, { flex: 1 }]}>
           <Text style={styles.profileHeaderText}>Welcome</Text>
-          <Text style={styles.profileHeaderTitle}>{user?.name}</Text>
+          <Text
+            style={[styles.profileHeaderTitle, { flex: 1, flexWrap: "wrap" }]}
+          >
+            {user?.name}
+          </Text>
           <Text style={styles.profileHeaderText}>{user?.email}</Text>
         </View>
       </View>
+
       <View>
         <IconButton
           iconComponent={
@@ -58,4 +65,3 @@ const ProfileHeader = ({ user }: { user: PartialUserSchemaWithIdProps }) => {
 };
 
 export default ProfileHeader;
-

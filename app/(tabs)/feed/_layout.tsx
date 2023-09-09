@@ -5,6 +5,7 @@ export default function FeedLayout() {
     <Stack  initialRouteName="index" >
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="feed-details" options={{ headerShown: true }} />
+      <Stack.Screen name="search" options={{ headerShown: false}} />
     </Stack>
   );
 }

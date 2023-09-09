@@ -39,7 +39,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
-            <Link href="/modal" asChild>
+            <Link href="/help" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome
@@ -80,6 +80,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "Profile",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="user-o" color={color} />,
         }}
       />

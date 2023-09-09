@@ -220,7 +220,6 @@ export default ({
       color: colors.text,
     },
     profileHeaderImgContainer: {
-      padding: SIZES.radius,
       borderRadius: 100,
       borderWidth: 2,
       marginRight: SIZES.radius,
@@ -228,8 +227,9 @@ export default ({
       backgroundColor: colors.tertiary,
     },
     profileHeaderImg: {
-      width: 50,
-      height: 50,
+      width: 100,
+      height: 100,
+      borderRadius: 100,
     },
     prSectBtnCTN: {
       flexDirection: "row",
@@ -248,6 +248,7 @@ export default ({
       backgroundColor: colors.tertiary,
       padding: SIZES.base / 2,
       borderRadius: 5,
+      marginLeft: SIZES.radius,
     },
     screenHeaderIconCont: {
       marginBottom: SIZES.radius / 2,
@@ -276,7 +277,6 @@ export default ({
     },
     section: {
       marginTop: SIZES.padding / 2,
-      paddingHorizontal: SIZES.radius,
       paddingTop: SIZES.padding,
     },
     searchResultContainer: {
@@ -299,12 +299,19 @@ export default ({
     searchInput: {
       borderRadius: SIZES.radius / 2,
       borderWidth: 1,
+      ...Platform.select({
+        ios: {
+          shadowColor: "#171717",
+          shadowOffset: { width: -2, height: 4 },
+          shadowOpacity: 0.2,
+          shadowRadius: 3,
+        },
+        android: {
+          elevation: 5,
+        },
+      }),
       borderColor: colors.background,
       backgroundColor: "transparent",
-      shadowColor: "#171717",
-      shadowOffset: { width: -2, height: 4 },
-      shadowOpacity: 0.2,
-      shadowRadius: 3,
     },
     searchIconContainer: {
       marginBottom: SIZES.radius / 2,
@@ -320,11 +327,17 @@ export default ({
       paddingVertical: SIZES.radius,
       alignItems: "flex-start",
       margin: SIZES.radius / 2,
-      shadowColor: COLORS.primaryDark200,
-      shadowOffset: { width: -2, height: 4 },
-      shadowOpacity: 0.2,
-      shadowRadius: 3,
-      elevation: 5,
+      ...Platform.select({
+        ios: {
+          shadowColor: "#171717",
+          shadowOffset: { width: -2, height: 4 },
+          shadowOpacity: 0.2,
+          shadowRadius: 3,
+        },
+        android: {
+          elevation: 5,
+        },
+      }),
     },
     textInput: {
       flex: 1,

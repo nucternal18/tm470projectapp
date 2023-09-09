@@ -7,7 +7,6 @@ import {
   ImageStyle,
   GestureResponderEvent,
 } from "react-native";
-import { COLORS } from "@constants/theme";
 
 interface IconButtonProps {
   onPress: (event: GestureResponderEvent) => void;
@@ -35,11 +34,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: COLORS.primaryDark200,
-    shadowOffset: {width: -2, height: 4},
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5,
   },
 });
 

@@ -24,7 +24,7 @@ const ProfileSectionButtons = ({title, onPress, buttonStyles, prependIcon}: Butt
       {prependIcon}
       <Text style={styles.prSectBtnTxt}>{title}</Text>
       </View>
-      <AntDesign name="right" size={20} color={colors.text} />
+      <AntDesign name="right" size={20} color={colors.text} style={{ marginRight: 10 }} />
     </TouchableOpacity>
   );
 };

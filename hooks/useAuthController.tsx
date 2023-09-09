@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useCallback } from "react";
+import { useLayoutEffect } from "react";
 import Toast from "react-native-root-toast";
 import * as SecureStore from "expo-secure-store";
 import { useRouter, useSegments } from "expo-router";
@@ -85,10 +85,7 @@ export default function useAuthController(isNavigationReady: boolean) {
     if (checkIsTokenExpired && !isAuthenticated && !user && !inAuthGroup) {
       dispatch(setAuthState({ token: null, isAuthenticated: false }));
       router.replace("/(auth)");
-    }  else if (
-      !checkIsTokenExpired &&
-      inAuthGroup
-    ) {
+    } else if (!checkIsTokenExpired && inAuthGroup) {
       router.replace("/(tabs)/feed");
       dispatch(setAuthState({ token: token, isAuthenticated: true }));
     }
@@ -114,5 +111,5 @@ export default function useAuthController(isNavigationReady: boolean) {
 
   return {
     user,
-  }
+  };
 }

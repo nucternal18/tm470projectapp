@@ -23,6 +23,7 @@ module.exports = function (api) {
             "@helpers": "./helpers",
             "@features": "./global-state/features",
             "@models": "./Models",
+            "@lib": "./lib",
           },
         },
       ],
