@@ -1,13 +1,14 @@
 import { Animated, ActivityIndicator, Pressable, useColorScheme } from 'react-native';
-import { Text, View } from '@components/Themed';
+import { Link, useRouter } from 'expo-router';
 
 // hooks (Controller)
-import useGetFeedData from '@hooks/useFeedController';
+import useGetFeedController from '@hooks/useFeedController';
 import { FeedItem } from '@components/FeedItem';
 
 // constants
 import {  SIZES } from '@constants/theme';
 import globalStyles from "@constants/styles";
+import Colors from '@constants/Colors';
 
 // zod schemas
 import { SectionSchemaProps } from "@models/Feed";
@@ -16,14 +17,14 @@ import { SectionSchemaProps } from "@models/Feed";
 import useTheme from "@global-state/features/theme/useTheme";
 
 // components
+import { Text, View } from '@components/Themed';
 import ScreenHeader from "@components/ScreenHeader";
-import { Link } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
-import Colors from '@constants/Colors';
 
 export default function Home() {
+  const router = useRouter();
   const colorScheme = useColorScheme();
-  const { feedItems, isLoading } = useGetFeedData();
+  const { feedItems, isLoading } = useGetFeedController();
 
    const { colors } = useTheme();
    const styles = globalStyles({ colors });
@@ -70,7 +71,7 @@ export default function Home() {
         )}
         renderItem={({ item }) => {
           return (
-            <FeedItem item={item} onPress={() => {}} testID={item.title} />
+            <FeedItem item={item} onPress={() => router.push({ pathname: '/feed/feed-details', params: { id: item.id } })} testID={item.title} />
           );
         }}
         numColumns={1}

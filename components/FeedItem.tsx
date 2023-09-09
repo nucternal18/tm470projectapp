@@ -32,6 +32,7 @@ export function FeedItem({ item, testID, onPress }: FeedItemProps) {
         gap: 10,
         paddingHorizontal: SIZES.base,
       }}
+      onPress={onPress}
     >
       <View
         style={{

@@ -46,9 +46,17 @@ export default ({
     contentText: {
       ...FONTS.body2,
       color: colors.text,
+      textAlign: "justify",
+      marginBottom: SIZES.base * 2,
     },
     container: {
       flex: 1,
+    },
+    contentContainer: {
+      flex: 1,
+      backgroundColor: colors.background,
+      alignItems: "center",
+      padding: SIZES.base * 2,
     },
     customInputContainer: {
       flexDirection: "row",
@@ -294,7 +302,7 @@ export default ({
       borderColor: colors.background,
       backgroundColor: "transparent",
       shadowColor: "#171717",
-      shadowOffset: {width: -2, height: 4},
+      shadowOffset: { width: -2, height: 4 },
       shadowOpacity: 0.2,
       shadowRadius: 3,
     },
@@ -313,7 +321,7 @@ export default ({
       alignItems: "flex-start",
       margin: SIZES.radius / 2,
       shadowColor: COLORS.primaryDark200,
-      shadowOffset: {width: -2, height: 4},
+      shadowOffset: { width: -2, height: 4 },
       shadowOpacity: 0.2,
       shadowRadius: 3,
       elevation: 5,
@@ -331,7 +339,7 @@ export default ({
     },
     titleContainer: {
       width: "100%",
-      alighItems: "center",
+      alignItems: "center",
       justifyContent: "center",
       paddingVertical: SIZES.padding / 2,
     },

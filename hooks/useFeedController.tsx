@@ -4,8 +4,9 @@ import { useGetFeedsQuery } from "@global-state/features/feed/feedApiSlice";
 
 import { SectionSchemaProps } from "@models/Feed";
 
-export default function useGetFeedData() {
+export default function useGetFeedController() {
   const [feedItems, setFeedItems] = React.useState<SectionSchemaProps[]>([]);
+  const [feedItem, setFeedItem] = React.useState<SectionSchemaProps | null>(null)
   const { data, isLoading, isSuccess } = useGetFeedsQuery();
 
   // generate a function that will return all the sub sections for all section
@@ -44,10 +45,10 @@ export default function useGetFeedData() {
     }
   }, [data, isSuccess]);
 
-  const getFeedItemById = (id: string) => {
+  const getFeedItemById = React.useCallback( (id: string) => {
     const feedItem = feedItems.find((item) => item.id === id);
-    return feedItem;
-  };
+    setFeedItem(feedItem as SectionSchemaProps);
+  },[feedItems, setFeedItem]);
 
-  return { feedItems, isLoading, getFeedItemById };
+  return { feedItems, isLoading, feedItem, getFeedItemById };
 }
